@@ -1,4 +1,4 @@
-#Grid painter thing
+#Grid painter
 
 Generates an html grid that you can draw on.
 
