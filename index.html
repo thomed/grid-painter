@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Grid Painter</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -13,13 +13,18 @@
     <body>
         
         <div class="container-fluid">
+            <div class="row header"> 
+                <div class="col-xs-12">
+                    <h3>Grid Painter</h3>
+                </div>
+            </div>
             <div class="row">
                 <div id="grid-area" class="col-xs-12 text-center"></div>
             </div>
             <div class="row text-center change-color">
                 <input id="colorText" class="jscolor" />
-                <input id="colorBtn" type="button" onclick="setColor()" value="set color" />
-                <input id="clearBtn" type="button" onclick="clearCanvas()" value="clear" />
+                <input id="colorBtn" class="btn btn-default" type="button" onclick="setColor()" value="set color" />
+                <input id="clearBtn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
             </div>
         </div>
         

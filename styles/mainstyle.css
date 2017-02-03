@@ -24,3 +24,10 @@
 .change-color {
     margin-top: 1em;
 }
+
+.header {
+    background-color: #ededed;
+    border-bottom: solid 1px #dfdfdf;
+    color: #b5b5b5;
+    font-family: sans-serif;
+}
