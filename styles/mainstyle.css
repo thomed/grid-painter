@@ -1,0 +1,26 @@
+.wee-div {
+    width: 10px;
+    height: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    display: inline-block;
+    background-color: white;
+}
+
+.wee-div:hover {
+    background-color: black;
+}
+
+.grid-row {
+    margin: -1px -2px 0 0;
+    height: 10px;
+}
+
+#grid-area {
+    margin-top: 5em;
+}
+
+.change-color {
+    margin-top: 1em;
+}
