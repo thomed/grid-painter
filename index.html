@@ -11,15 +11,16 @@
         <link href="styles/mainstyle.css" rel="stylesheet"/>
     </head>
     <body>
-        
         <div class="container-fluid">
             <div class="row header"> 
                 <div class="col-xs-12">
                     <h3>Grid Painter</h3>
                 </div>
             </div>
-            <div class="row">
-                <div id="grid-area" class="col-xs-12 text-center"></div>
+            <div class="row drawing-area">
+                <div id="grid-area" class="col-xs-12 text-center" 
+                     ondragstart="return false">
+                </div>
             </div>
             <div class="row text-center change-color">
                 <input id="color-text" class="jscolor" value="0000ff" size="6"/>
