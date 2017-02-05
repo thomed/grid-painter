@@ -1,13 +1,9 @@
 var weeDiv = "<div class='wee-div'></div>";
 var rowDiv = "<div class='row grid-row'></div>";
-var col = 1;
-var row = 1;
-var numColumns = 50;
-var numRows = 50;
-
+var col = 1, row = 1;
+var numColumns = 50, numRows = 50;
 var mouseDown = false;
-
-var color = "blue";
+var color = "#00f";
 
 
 $(document).ready(function () {
@@ -19,17 +15,12 @@ $(document).ready(function () {
     $(document).mouseup(function () {
         mouseDown = false;
     });
+    
+    $("#color-text").change(function() {
+        color = "#" + $("#color-text").val();
+        console.log("color update to " + color);
+    })
 });
-
-function setColor() {
-    color = "#" + $("#colorText").val();
-    console.log("color changed to " + color);
-}
-
-function clearCanvas() {
-    $(".wee-div").css({'background-color': 'white'});
-    console.log("cleared");
-}
 
 function initGrid() {
     for (gridRow = 0; gridRow < numRows; gridRow++) {
@@ -55,4 +46,9 @@ function initGrid() {
             $(this).css({'background-color': color});
         });
     });
+}
+
+function clearCanvas() {
+    $(".wee-div").css({'background-color': 'white'});
+    console.log("cleared");
 }
