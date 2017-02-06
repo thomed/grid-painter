@@ -5,33 +5,51 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="styles/jquery-ui.min.css" />
-        <link href="styles/jquery-ui.structure.min.css" />
-        <link href="styles/jquery-ui.theme.min.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+        <link href="styles/jquery-ui.structure.min.css" rel="stylesheet"/>
+        <link href="styles/jquery-ui.theme.min.css" rel="stylesheet"/>
         <link href="styles/mainstyle.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row header"> 
+            <!--            <div class="row header"> 
+                            <div class="col-xs-12">
+                                <h3>Grid Painter</h3>
+                            </div>
+                        </div>-->
+            <div id="user-options" class="row navbar-fixed-top">
                 <div class="col-xs-12">
-                    <h3>Grid Painter</h3>
+                    <table class="">
+                        <tr>
+                            <td>
+                                <div id="scale-slider"></div>
+                            </td>
+                            <td>
+                                <div class="change-color">
+                                    <input id="color-text" class="jscolor" value="0000ff" size="6"/>
+                                    <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+            
             <div class="row drawing-area">
                 <div id="grid-area" class="col-xs-12 text-center" 
                      ondragstart="return false">
                 </div>
             </div>
-            <div class="row text-center change-color">
-                <input id="color-text" class="jscolor" value="0000ff" size="6"/>
-                <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
-            </div>
+            <!--            <div class="row text-center change-color">
+                            <input id="color-text" class="jscolor" value="0000ff" size="6"/>
+                            <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
+                        </div>-->
         </div>
-        
+
         <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="js/jscolor.min.js" ></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/scripts.js" ></script>
     </body>
 </html>

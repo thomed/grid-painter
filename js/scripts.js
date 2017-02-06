@@ -14,6 +14,7 @@ var divColClass = "column-" + col, divRowClass = "row-" + row;
 $(document).ready(function () {
     initGrid();
 
+    // drag & draw bools
     $(document).mousedown(function () {
         mouseDown = true;
     });
@@ -21,9 +22,24 @@ $(document).ready(function () {
         mouseDown = false;
     });
     
+    // change color when selected
     $("#color-text").change(function() {
         color = "#" + $("#color-text").val();
     });
+    
+    $("#scale-slider").slider({
+        value:10,
+        min: 8,
+        max:40,
+        slide : function(event, ui) {
+            $(".wee-div").css({"height" : ui.value + "px", "width" : ui.value + "px"});
+            $(".grid-row").css({"height" : ui.value + "px"});
+        }
+    });
+//    
+//    $("#scale-slider").change(function() {
+//        var dimen = $("#scale-slider").val();
+//    });
 });
 
 function initGrid() {

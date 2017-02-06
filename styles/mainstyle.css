@@ -1,7 +1,11 @@
+body {
+}
+
 #grid-area {
-    margin-top: 5em;
+    margin-top: 7em;
     pointer-events: fill;
     cursor: default;
+    white-space: nowrap;
 }
 
 .wee-div {
@@ -32,4 +36,23 @@
     border-bottom: solid 1px #dfdfdf;
     color: #b5b5b5;
     font-family: sans-serif;
+}
+
+#user-options {
+    border: solid 1px black;
+    background-color: white;
+}
+
+#user-options  table{
+    width: 100%;
+}
+
+#user-options td {
+    border-left: solid 1px black;
+    border-right: solid 1px black;
+    padding: 0.5em 1em;
+}
+
+#scale-slider {
+    max-width: 150px;
 }
