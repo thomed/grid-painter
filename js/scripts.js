@@ -21,25 +21,30 @@ $(document).ready(function () {
     $(document).mouseup(function () {
         mouseDown = false;
     });
-    
+
     // change color when selected
-    $("#color-text").change(function() {
+    $("#color-text").change(function () {
         color = "#" + $("#color-text").val();
     });
-    
+
     $("#scale-slider").slider({
-        value:10,
+        value: 10,
         min: 8,
-        max:40,
-        slide : function(event, ui) {
-            $(".wee-div").css({"height" : ui.value + "px", "width" : ui.value + "px"});
-            $(".grid-row").css({"height" : ui.value + "px"});
+        max: 40,
+        slide: function (event, ui) {
+            $(".wee-div").css({"height": ui.value + "px", "width": ui.value + "px"});
+            $(".grid-row").css({"height": ui.value + "px"});
         }
     });
-//    
-//    $("#scale-slider").change(function() {
-//        var dimen = $("#scale-slider").val();
-//    });
+
+    $("#grid-checkbox").change(function () {
+        if (!$("#grid-checkbox").is(":checked")) {
+            $(".wee-div").css({"border": "none"});
+        } else {
+            $(".wee-div").css({"border": "solid 1px black"});
+        }
+    });
+    
 });
 
 function initGrid() {

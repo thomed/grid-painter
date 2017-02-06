@@ -12,11 +12,6 @@
     </head>
     <body>
         <div class="container-fluid">
-            <!--            <div class="row header"> 
-                            <div class="col-xs-12">
-                                <h3>Grid Painter</h3>
-                            </div>
-                        </div>-->
             <div id="user-options" class="row navbar-fixed-top">
                 <div class="col-xs-12">
                     <table class="">
@@ -30,6 +25,9 @@
                                     <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
                                 </div>
                             </td>
+                            <td>
+                                <label><input id="grid-checkbox" type="checkbox" checked />Grid</label>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -40,10 +38,6 @@
                      ondragstart="return false">
                 </div>
             </div>
-            <!--            <div class="row text-center change-color">
-                            <input id="color-text" class="jscolor" value="0000ff" size="6"/>
-                            <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
-                        </div>-->
         </div>
 
         <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
