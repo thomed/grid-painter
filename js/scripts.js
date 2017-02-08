@@ -96,9 +96,16 @@ function getLastGrandchild() {
 // TODO 
 // implement hex -> base64 conversion for colors. 
 // Figure out how base64 image data is organized/written/interpreted.
+// 
+// >>>> These links have good information on how PNGs are written <<<<
+// >>>> http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html <<<<
+// >>>> https://www.w3.org/TR/PNG-Chunks.html <<<< chunks
 //
+// look into using btoa() or atob()?
+
 function generateURI() {
-    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY7D3OAMAAh0BVEDFEogAAAAASUVORK5CYII=";
+    var headerInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA";
+    return headerInfo + "EAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY7D3OAMAAh0BVEDFEogAAAAASUVORK5CYII=";
 }
 
 function downloadPNG(uri) {
@@ -112,7 +119,7 @@ function downloadPNG(uri) {
     console.log(uri);
 }
 
-$("#download-btn").click(function() {
+$("#download-btn").click(function () {
     downloadPNG(generateURI());
 });
 
