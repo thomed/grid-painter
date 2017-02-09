@@ -13,29 +13,25 @@
     <body>
         <div class="container-fluid">
             <div id="user-options" class="row navbar-fixed-top">
-                <div class="col-xs-12">
+                <table>
+                    <tr>
                     <table>
-                        <tr>
-                            <td>
-                                <div id="scale-slider"></div>
-                            </td>
-                            <td>
-                                <div class="change-color">
-                                    <input id="color-text" class="jscolor" value="0000ff" size="6"/>
-                                    <input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="clear" />
-                                </div>
-                            </td>
-                            <td>
-                                <label><input id="grid-checkbox" type="checkbox" checked />Grid</label>
-                            </td>
-                            <td>
-                                <input id="download-btn" class="btn btn-default" type="button" value="Download" />
-                            </td>
-                        </tr>
+                        <tr><td class="table-header">Drawing</td></tr>
+                        <tr><td>Color: <input id="color-text" class="jscolor" value="0000ff" size="6"/></td></tr>
                     </table>
-                </div>
+                    <table>
+                        <tr><td class="table-header">Grid Options</td></tr>
+                        <tr><td><label><input id="grid-checkbox" type="checkbox" checked />Grid</label></td></tr>
+                        <tr><td><div id="scale-slider"></div>Cell Scale</td></tr>
+                    </table>
+                    </tr>
+                    <table class="last-table">
+                        <tr><td><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
+                        <tr><td><input id="download-btn" class="btn btn-default" type="button" value="Download" /></td></tr>
+                    </table>
+                </table>
             </div>
-            
+
             <div class="row drawing-area">
                 <div id="grid-area" class="text-center" 
                      ondragstart="return false">

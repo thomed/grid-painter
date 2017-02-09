@@ -4,7 +4,6 @@
  * - Various UI improvements
  * - Color picker tool (dropper)
  * - Eraser & Transparency
- * - Improve single pixel drawing
  * - Recently used colors palette
  * - Possibly add ruler or other kind of spacial reference
  * 
@@ -15,7 +14,7 @@
  */
 
 // ingredients
-var numColumns = 20, numRows = 24;
+var numColumns = 32, numRows = 32;
 var col = 1, row = 1;
 var mouseDown = false;
 var color = "#00f";
@@ -88,7 +87,7 @@ function initGrid() {
                 $(this).css({'background-color': color});
             }
         });
-        $(this).click(function () {
+        $(this).mousedown(function () {
             $(this).css({'background-color': color});
         });
     });
@@ -108,7 +107,6 @@ function parseColors() {
             gridCell.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
             gridCell.g = rawRGB[1].trim();
             gridCell.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
-            console.log(gridCell.r + " " + gridCell.g + " " + gridCell.b);
         }
     }
 }
