@@ -1,6 +1,22 @@
+/**
+ * TODO:
+ * - Grid dimensions option
+ * - Various UI improvements
+ * - Color picker tool (dropper)
+ * - Eraser & Transparency
+ * - Improve single pixel drawing
+ * - Recently used colors palette
+ * - Possibly add ruler or other kind of spacial reference
+ * 
+ * Stretch goals:
+ * - Additional drawing tools
+ * - Exported image scaling
+ * - Undo / Redo
+ */
+
 // ingredients
+var numColumns = 20, numRows = 24;
 var col = 1, row = 1;
-var numColumns = 5, numRows = 5;
 var mouseDown = false;
 var color = "#00f";
 var gridArr;
@@ -12,7 +28,7 @@ var rowDiv = "<div class='row grid-row'></div>";
 // html div classes
 var divColClass = "column-" + col, divRowClass = "row-" + row;
 
-$(document).ready(function () {
+$(function () {
     initGrid();
 
     // drag & draw bools
@@ -41,10 +57,10 @@ $(document).ready(function () {
 
     // enable/disable grid with checkbox
     $("#grid-checkbox").change(function () {
-        if (!$("#grid-checkbox").is(":checked")) {
-            $(".wee-div").css({"border": "none"});
-        } else {
+        if ($("#grid-checkbox").is(":checked")) {
             $(".wee-div").css({"border": "solid 1px black"});
+        } else {
+            $(".wee-div").css({"border": "none"});
         }
     });
 
@@ -98,12 +114,11 @@ function parseColors() {
 }
 
 /**
- * generate (but don't display!) canvas.
- * then get a data URI/URL for the canvas which can then be applied to the 
+ * Generate (but don't display!) canvas.
+ * Then get a data URI/URL for the canvas which can then be applied to the 
  * download link
  */
 function generateCanvas() {
-    parseColors();
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     var imgData = ctx.createImageData(numColumns, numRows);
@@ -111,32 +126,21 @@ function generateCanvas() {
     canvas.width = numColumns;
     canvas.height = numRows;
     document.body.appendChild(canvas);
-    
-    for(gridRow = 0; gridRow < numRows; gridRow++) {
-        for(gridColumn = 0; gridColumn < numColumns; gridColumn++) {
+
+    parseColors();
+    for (gridRow = 0; gridRow < numRows; gridRow++) {
+        for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
             var gridCell = gridArr[gridRow][gridColumn];
             colorData[0] = gridCell.r;
             colorData[1] = gridCell.g;
             colorData[2] = gridCell.b;
-            colorData[3] = "255";
+            colorData[3] = "255"; // alpha
             ctx.putImageData(imgData, gridColumn, gridRow);
         }
     }
-    
+
     document.body.removeChild(canvas);
     return canvas.toDataURL("image/png");
-}
-
-function clearCanvas() {
-    $(".wee-div").css({'background-color': 'white'});
-}
-
-function getLastChild() {
-    return $("#grid-area").children().last();
-}
-
-function getLastGrandchild() {
-    return $("#grid-area").children().last().children().last();
 }
 
 function downloadPNG(uri) {
@@ -149,6 +153,20 @@ function downloadPNG(uri) {
     delete link;
 }
 
+function clearCanvas() {
+    $(".wee-div").css({'background-color': 'white'});
+}
+
 $("#download-btn").click(function () {
     downloadPNG(generateCanvas());
 });
+
+/** Helper method for readability */
+function getLastChild() {
+    return $("#grid-area").children().last();
+}
+
+/** Helper Method for readability */
+function getLastGrandchild() {
+    return $("#grid-area").children().last().children().last();
+}
