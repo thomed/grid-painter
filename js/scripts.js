@@ -1,12 +1,6 @@
-/**
- * TODO
- * Client-side PNG generation. library or proprietary data URI magic?
- * http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/
- */
-
 // ingredients
 var col = 1, row = 1;
-var numColumns = 20, numRows = 20;
+var numColumns = 5, numRows = 5;
 var mouseDown = false;
 var color = "#00f";
 var gridArr;
@@ -71,19 +65,6 @@ function initGrid() {
         col = 0;
         row++;
     }
-    
-// rgb color info parsing 
-// TODO probably do something along these lines to store rgb info with each grid element
-//      then write to location on canvas
-    console.log(gridArr[0][19].css("background-color"));
-    gridArr[0][19].backgroundColor = gridArr[0][19].css("background-color").slice(4, 7) + gridArr[0][19].css("background-color").slice(9, 12) + gridArr[0][19].css("background-color").slice(14, 17);
-    var rawRGB = gridArr[0][19].css("background-color").split(",");
-    gridArr[0][19].r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
-    gridArr[0][19].g = rawRGB[1].trim();
-    gridArr[0][19].b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
-    console.log(gridArr[0][19].r + " " + gridArr[0][19].g + " " + gridArr[0][19].b);
-// end rgb format prototyping
-// probably best to stick with this kind of a method, at least for initial implementation.
 
     $(".grid-row").children().each(function () {
         $(this).mouseover(function () {
@@ -95,6 +76,55 @@ function initGrid() {
             $(this).css({'background-color': color});
         });
     });
+}
+
+/**
+ * Gathers the background-color css property from each cell in the grid and saves
+ * or updates the separate values on that object.
+ */
+function parseColors() {
+    var gridCell, rawRGB;
+
+    for (gridRow = 0; gridRow < numRows; gridRow++) {
+        for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
+            gridCell = gridArr[gridRow][gridColumn];
+            rawRGB = gridCell.css("background-color").split(",");
+            gridCell.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
+            gridCell.g = rawRGB[1].trim();
+            gridCell.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
+            console.log(gridCell.r + " " + gridCell.g + " " + gridCell.b);
+        }
+    }
+}
+
+/**
+ * generate (but don't display!) canvas.
+ * then get a data URI/URL for the canvas which can then be applied to the 
+ * download link
+ */
+function generateCanvas() {
+    parseColors();
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    var imgData = ctx.createImageData(numColumns, numRows);
+    var colorData = imgData.data;
+    canvas.width = numColumns;
+    canvas.height = numRows;
+    document.body.appendChild(canvas);
+    
+    for(gridRow = 0; gridRow < numRows; gridRow++) {
+        for(gridColumn = 0; gridColumn < numColumns; gridColumn++) {
+            var gridCell = gridArr[gridRow][gridColumn];
+            colorData[0] = gridCell.r;
+            colorData[1] = gridCell.g;
+            colorData[2] = gridCell.b;
+            colorData[3] = "255";
+            ctx.putImageData(imgData, gridColumn, gridRow);
+        }
+    }
+    
+    document.body.removeChild(canvas);
+    return canvas.toDataURL("image/png");
 }
 
 function clearCanvas() {
@@ -109,28 +139,6 @@ function getLastGrandchild() {
     return $("#grid-area").children().last().children().last();
 }
 
-// URI and Download experimentation
-// ================================
-// Currently generates and downloads a .png file with a single, hardcoded pixel.
-// 
-// TODO 
-// implement hex -> base64 conversion for colors. 
-// Figure out how base64 image data is organized/written/interpreted.
-// 
-// >>>> These links have good information on how PNGs are written <<<<
-// >>>> http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html <<<<
-// >>>> https://www.w3.org/TR/PNG-Chunks.html <<<< chunks
-//
-// look into using btoa() or atob()?
-// 
-// alternate solution: draw to a hidden canvas then return canvas.toDataURL()
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-// probably the simplest out of the other solutions, but not as neat.
-function generateURI() {
-    var headerInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA";
-    return headerInfo + "EAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY7D3OAMAAh0BVEDFEogAAAAASUVORK5CYII=";
-}
-
 function downloadPNG(uri) {
     var link = document.createElement("a");
     link.download = "asdf.png";
@@ -139,23 +147,8 @@ function downloadPNG(uri) {
     link.click();
     document.body.removeChild(link);
     delete link;
-    console.log(uri);
-}
-
-// generate (but don't display!) canvas.
-// then get a data URI/URL for the canvas which can then be applied to the 
-// download link
-function generateCanvas() {
-    var canvas = document.createElement("canvas");
-    canvas.width = numColumns;
-    canvas.height = numRows;
-    document.body.appendChild(canvas);
-
-    return canvas.toDataURL("image/png");
 }
 
 $("#download-btn").click(function () {
-    downloadPNG(generateURI());
+    downloadPNG(generateCanvas());
 });
-
-// end experimenting
