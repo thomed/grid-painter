@@ -45,7 +45,7 @@ $(function () {
 
     // increase cell size with slider
     $("#scale-slider").slider({
-        value: 10,
+        value: 15,
         min: 8,
         max: 40,
         slide: function (event, ui) {
@@ -56,13 +56,8 @@ $(function () {
 
     // enable/disable grid with checkbox
     $("#grid-checkbox").change(function () {
-        if ($("#grid-checkbox").is(":checked")) {
-            $(".wee-div").css({"border": "solid 1px black"});
-        } else {
-            $(".wee-div").css({"border": "none"});
-        }
+        $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border" : "solid 1px black"}) : $(".wee-div").css({"border" : "none"}) ; 
     });
-
 });
 
 function initGrid() {
@@ -107,6 +102,7 @@ function parseColors() {
             gridCell.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
             gridCell.g = rawRGB[1].trim();
             gridCell.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
+            gridCell.a = rawRGB.length == 4 ? rawRGB[3] : "255";
         }
     }
 }
@@ -132,7 +128,7 @@ function generateCanvas() {
             colorData[0] = gridCell.r;
             colorData[1] = gridCell.g;
             colorData[2] = gridCell.b;
-            colorData[3] = "255"; // alpha
+            colorData[3] = gridCell.a; // alpha
             ctx.putImageData(imgData, gridColumn, gridRow);
         }
     }
@@ -151,8 +147,14 @@ function downloadPNG(uri) {
     delete link;
 }
 
+function setErase() {
+    color = "transparent";
+    $("#color-text").val("erase");
+    $("#color-text").css({"background-color" : "transparent", "color" : "black"});
+}
+
 function clearCanvas() {
-    $(".wee-div").css({'background-color': 'white'});
+    $(".wee-div").css({'background-color': 'transparent'});
 }
 
 $("#download-btn").click(function () {

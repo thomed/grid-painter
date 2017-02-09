@@ -15,7 +15,6 @@ Also allows exporting to a PNG:
 * Make various improvements to UI
 * Color picker/dropper tool
 * Recently used colors palette
-* Eraser tool and transparency
 * Possibly add ruler or other kind of spacial reference
 
 ####Stretch goals:

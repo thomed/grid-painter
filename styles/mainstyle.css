@@ -1,5 +1,9 @@
 body {
-    background-color: #f0f0f0;
+    background-color: #ddd;
+}
+
+.drawing-area { 
+    text-align: center;
 }
 
 #grid-area {
@@ -7,14 +11,16 @@ body {
     pointer-events: fill;
     cursor: default;
     white-space: nowrap;
+    display: inline-block;
+    background-color: white;
 }
 
 .wee-div {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border: solid 1px black;
     display: inline-block;
-    background-color: white;
+    background-color: transparent;
 }
 
 .wee-div:hover {
@@ -23,7 +29,7 @@ body {
 
 .grid-row {
     margin: -1px -2px 0 0;
-    height: 10px;
+    height: 15px;
 }
 
 .change-color {
@@ -46,8 +52,6 @@ body {
     border-right: none;
 }
 
-
-
 #user-options td {
     padding: 1em 2em;
 }
@@ -62,7 +66,7 @@ body {
 
 .table-header {
     border-bottom: solid 2px black;
-    background-color: #f0f0f0;
+    background-color: #efefef;
     font-weight:  bold;
 }
 

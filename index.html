@@ -18,6 +18,11 @@
                     <table>
                         <tr><td class="table-header">Drawing</td></tr>
                         <tr><td>Color: <input id="color-text" class="jscolor" value="0000ff" size="6"/></td></tr>
+                        <tr>
+                            <td>
+                                <button class="btn-link"><span class="glyphicon glyphicon-erase" onclick="setErase()"></span></button>
+                            </td>
+                        </tr>
                     </table>
                     <table>
                         <tr><td class="table-header">Grid Options</td></tr>
@@ -33,8 +38,7 @@
             </div>
 
             <div class="row drawing-area">
-                <div id="grid-area" class="text-center" 
-                     ondragstart="return false">
+                <div id="grid-area" class="text-center" ondragstart="return false">
                 </div>
             </div>
         </div>
