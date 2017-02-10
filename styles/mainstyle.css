@@ -1,5 +1,5 @@
 body {
-    background-color: #ddd;
+    background-color: #cecece;
 }
 
 .drawing-area { 
@@ -39,7 +39,8 @@ body {
 #user-options {
     border: solid 2px black;
     border-bottom: none;
-    background-color: white;
+    background-color: #1a1a1a;
+    color: white;
     width: 10%;
     min-width: 170px;
     height: 100%;
@@ -66,8 +67,20 @@ body {
 
 .table-header {
     border-bottom: solid 2px black;
-    background-color: #efefef;
+    background-color: #121212;
     font-weight:  bold;
+}
+
+#palette {
+    border: solid 1px black;
+}
+
+#palette td {
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    border: solid 1px black;
+    background-color: #f8f8f8;
 }
 
 #scale-slider {

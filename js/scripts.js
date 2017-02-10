@@ -6,6 +6,7 @@
  * - Eraser & Transparency
  * - Recently used colors palette
  * - Possibly add ruler or other kind of spacial reference
+ * - Make transparent cells perceptible
  * 
  * Stretch goals:
  * - Additional drawing tools
@@ -18,7 +19,7 @@ var numColumns = 32, numRows = 32;
 var col = 1, row = 1;
 var mouseDown = false;
 var color = "#00f";
-var gridArr;
+var gridArr, paletteArr;
 
 // html div strings
 var weeDiv = "<div class='wee-div'></div>";
@@ -29,6 +30,7 @@ var divColClass = "column-" + col, divRowClass = "row-" + row;
 
 $(function () {
     initGrid();
+    initPalette();
 
     // drag & draw bools
     $(document).mousedown(function () {
@@ -56,7 +58,7 @@ $(function () {
 
     // enable/disable grid with checkbox
     $("#grid-checkbox").change(function () {
-        $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border" : "solid 1px black"}) : $(".wee-div").css({"border" : "none"}) ; 
+        $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border": "solid 1px black"}) : $(".wee-div").css({"border": "none"});
     });
 });
 
@@ -89,6 +91,61 @@ function initGrid() {
 }
 
 /**
+ * so messy smh
+ */
+function initPalette() {
+    // single row for the moment. probably until palette updating implemented
+    var pRow = 1, pCol = 7;
+    paletteArr = new Array(6);
+    var palette = $("#palette");
+    var jp;
+    
+    
+    for (var i = 0; i < pRow; i++) {
+        paletteArr[i] = new Array(8);
+        jp = palette.append("<tr></tr>").children().last();
+
+        for (var j = 0; j < pCol; j++) {
+            paletteArr[i][j] = jp.append("<td></td>").children().last();
+            //console.log(paletteArr[i][j]);
+        }
+        //console.log(jp.children().last());
+        jp.children().each(function() {
+            $(this).click(function() {
+                color = parseRGBtoHex($(this).css("background-color"));
+                $("#color-text").val(color);
+                $("#color-text").css({"background-color": color});
+            });
+        });
+        
+    }
+    paletteArr[0][0].css({"background-color": "black"});
+    paletteArr[0][1].css({"background-color": "grey"});
+    paletteArr[0][2].css({"background-color": "white"});
+    paletteArr[0][3].css({"background-color": "red"});
+    paletteArr[0][4].css({"background-color": "green"});
+    paletteArr[0][5].css({"background-color": "blue"});
+    paletteArr[0][6].css({"background-color": "yellow"});
+
+    //console.log(paletteArr[0][4].css("background-color").css({"background-color": "#asdfdf"}));
+    //parseRGBtoHex(paletteArr[0][4]);
+}
+
+// could separate into more than one function for readability
+function parseRGBtoHex(o) {
+    var rawRGB = o.split("(")[1].split(")")[0];
+    rawRGB = rawRGB.split(",");
+    var hex = rawRGB.map(function(c) {
+        c = parseInt(c).toString(16);
+        return (c.length === 1) ? "0" + c : c;
+    });
+    
+    //console.log("#" + hex.join(""));
+    
+    return("#" + hex.join(""));
+}
+
+/**
  * Gathers the background-color css property from each cell in the grid and saves
  * or updates the separate values on that object.
  */
@@ -102,7 +159,7 @@ function parseColors() {
             gridCell.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
             gridCell.g = rawRGB[1].trim();
             gridCell.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
-            gridCell.a = rawRGB.length == 4 ? rawRGB[3] : "255";
+            gridCell.a = rawRGB.length === 4 ? rawRGB[3] : "255";
         }
     }
 }
@@ -150,7 +207,7 @@ function downloadPNG(uri) {
 function setErase() {
     color = "transparent";
     $("#color-text").val("erase");
-    $("#color-text").css({"background-color" : "transparent", "color" : "black"});
+    $("#color-text").css({"background-color": "transparent", "color": "black"});
 }
 
 function clearCanvas() {
