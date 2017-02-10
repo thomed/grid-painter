@@ -18,7 +18,7 @@ var numColumns = 32, numRows = 32;
 var col = 1, row = 1;
 var mouseDown = false;
 var color = "#00f";
-var gridArr;
+var gridArr, paletteArr;
 
 // html div strings
 var weeDiv = "<div class='wee-div'></div>";
@@ -29,6 +29,7 @@ var divColClass = "column-" + col, divRowClass = "row-" + row;
 
 $(function () {
     initGrid();
+    initPalette();
 
     // drag & draw bools
     $(document).mousedown(function () {
@@ -56,7 +57,7 @@ $(function () {
 
     // enable/disable grid with checkbox
     $("#grid-checkbox").change(function () {
-        $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border" : "solid 1px black"}) : $(".wee-div").css({"border" : "none"}) ; 
+        $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border": "solid 1px black"}) : $(".wee-div").css({"border": "none"});
     });
 });
 
@@ -88,6 +89,40 @@ function initGrid() {
     });
 }
 
+function initPalette() {
+    paletteArr = new Array(5);
+    var palette = $("#palette");
+    for (var i = 0; i < 5; i++) {
+        paletteArr[i] = new Array(6);
+        palette.append("<tr></tr>");
+        for (var j = 0; j < 7; j++) {
+            paletteArr[i][j] = palette.children().last().append("<td></td>").children().last();
+            paletteArr[i][j].click(function () {
+                color = paletteArr[i][j].css("background-color");
+            });
+        }
+    }
+    paletteArr[0][0].css({"background-color": "black"});
+    paletteArr[0][1].css({"background-color": "grey"});
+    paletteArr[0][2].css({"background-color": "white"});
+    paletteArr[0][3].css({"background-color": "red"});
+    paletteArr[0][4].css({"background-color": "green"});
+    paletteArr[0][5].css({"background-color": "blue"});
+    paletteArr[0][6].css({"background-color": "yellow"});
+
+    parseRGBtoHex(paletteArr[0][4]);
+}
+
+function parseRGBtoHex(o) {
+    var rawRGB = o.css("background-color").split(",");
+    var hexColors = new Object();
+    hexColors.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length).toString(16);
+    hexColors.g = rawRGB[1].trim().toString(16);
+    hexColors.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1).toString(16);
+
+    console.log("#" + hexColors.r + hexColors.g + hexColors.b);
+}
+
 /**
  * Gathers the background-color css property from each cell in the grid and saves
  * or updates the separate values on that object.
@@ -102,7 +137,7 @@ function parseColors() {
             gridCell.r = rawRGB[0].trim().slice(rawRGB[0].indexOf("(") + 1, rawRGB[0].length);
             gridCell.g = rawRGB[1].trim();
             gridCell.b = rawRGB[2].trim().slice(0, rawRGB[2].indexOf(")") - 1);
-            gridCell.a = rawRGB.length == 4 ? rawRGB[3] : "255";
+            gridCell.a = rawRGB.length === 4 ? rawRGB[3] : "255";
         }
     }
 }
@@ -150,7 +185,7 @@ function downloadPNG(uri) {
 function setErase() {
     color = "transparent";
     $("#color-text").val("erase");
-    $("#color-text").css({"background-color" : "transparent", "color" : "black"});
+    $("#color-text").css({"background-color": "transparent", "color": "black"});
 }
 
 function clearCanvas() {

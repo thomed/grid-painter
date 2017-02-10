@@ -74,6 +74,17 @@ body {
     max-width: 150px;
 }
 
+#palette {
+    border: solid 1px black;
+}
+
+#palette td {
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    border: solid 1px black;
+}
+
 .last-table {
     border-bottom: none !important;
     text-align: center;

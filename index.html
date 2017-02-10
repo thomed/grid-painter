@@ -14,26 +14,29 @@
         <div class="container-fluid">
             <div id="user-options" class="row navbar-fixed-top">
                 <table>
+                    <tr><td class="table-header">Drawing</td></tr>
+                    <tr><td>Color: <input id="color-text" class="jscolor" value="0000ff" size="6"/></td></tr>
                     <tr>
-                    <table>
-                        <tr><td class="table-header">Drawing</td></tr>
-                        <tr><td>Color: <input id="color-text" class="jscolor" value="0000ff" size="6"/></td></tr>
-                        <tr>
-                            <td>
-                                <button class="btn-link"><span class="glyphicon glyphicon-erase" onclick="setErase()"></span></button>
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr><td class="table-header">Grid Options</td></tr>
-                        <tr><td><label><input id="grid-checkbox" type="checkbox" checked />Grid</label></td></tr>
-                        <tr><td><div id="scale-slider"></div>Cell Scale</td></tr>
-                    </table>
+                        <td>
+                            <table id="palette">
+
+                            </table>                            
+                        </td>
                     </tr>
-                    <table class="last-table">
-                        <tr><td><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
-                        <tr><td><input id="download-btn" class="btn btn-default" type="button" value="Download" /></td></tr>
-                    </table>
+                    <tr>
+                        <td>
+                            <button class="btn-link" onclick="setErase()"><span class="glyphicon glyphicon-erase"></span></button>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr><td class="table-header">Grid Options</td></tr>
+                    <tr><td><label><input id="grid-checkbox" type="checkbox" checked />Grid</label></td></tr>
+                    <tr><td><div id="scale-slider"></div>Cell Scale</td></tr>
+                </table>
+                <table class="last-table">
+                    <tr><td><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
+                    <tr><td><input id="download-btn" class="btn btn-default" type="button" value="Download" /></td></tr>
                 </table>
             </div>
 
