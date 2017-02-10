@@ -94,7 +94,8 @@ function initGrid() {
  * so messy smh
  */
 function initPalette() {
-    var pRow = 6, pCol = 7;
+    // single row for the moment. probably until palette updating implemented
+    var pRow = 1, pCol = 7;
     paletteArr = new Array(6);
     var palette = $("#palette");
     var jp;
