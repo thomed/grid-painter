@@ -3,8 +3,6 @@
  * - Grid dimensions option
  * - Various UI improvements
  * - Color picker tool (dropper)
- * - Eraser & Transparency
- * - Recently used colors palette
  * - Possibly add ruler or other kind of spacial reference
  * - Make transparent cells perceptible
  * 
