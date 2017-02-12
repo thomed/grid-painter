@@ -43,6 +43,7 @@ $(function () {
     // change color when selected
     $("#color-text").change(function () {
         color = "#" + $("#color-text").val();
+        addPaletteColor(color);
     });
 
     // increase cell size with slider
@@ -90,48 +91,32 @@ function initGrid() {
     });
 }
 
-/**
- * so messy smh
- */
 function initPalette() {
-    // single row for the moment. probably until palette updating implemented
-    var pRow = 1, pCol = 7;
-    paletteArr = new Array(6);
-    var palette = $("#palette");
-    var jp;
-    
-    
-    for (var i = 0; i < pRow; i++) {
-        paletteArr[i] = new Array(8);
-        jp = palette.append("<tr></tr>").children().last();
-
-        for (var j = 0; j < pCol; j++) {
-            paletteArr[i][j] = jp.append("<td></td>").children().last();
-            //console.log(paletteArr[i][j]);
-        }
-        //console.log(jp.children().last());
-        jp.children().each(function() {
-            $(this).click(function() {
-                color = parseRGBtoHex($(this).css("background-color"));
-                $("#color-text").val(color);
-                $("#color-text").css({"background-color": color});
-            });
-        });
-        
-    }
-    paletteArr[0][0].css({"background-color": "black"});
-    paletteArr[0][1].css({"background-color": "grey"});
-    paletteArr[0][2].css({"background-color": "white"});
-    paletteArr[0][3].css({"background-color": "red"});
-    paletteArr[0][4].css({"background-color": "green"});
-    paletteArr[0][5].css({"background-color": "blue"});
-    paletteArr[0][6].css({"background-color": "yellow"});
-
-    //console.log(paletteArr[0][4].css("background-color").css({"background-color": "#asdfdf"}));
-    //parseRGBtoHex(paletteArr[0][4]);
+    paletteArr = [];
+    addPaletteColor("black");
+    addPaletteColor("grey");
+    addPaletteColor("white");
+    addPaletteColor("red");
+    addPaletteColor("green");
+    addPaletteColor("blue");
+    addPaletteColor("yellow");
 }
 
-// could separate into more than one function for readability
+function addPaletteColor(c) {
+    if(paletteArr.length % 7 === 0 || paletteArr.length === 0) {
+        $("#palette").append("<tr></tr>");
+    }
+    var newPaletteCell = $("#palette").children().last().append("<td></td>").children().last();
+    newPaletteCell.css({"background-color": c});
+    paletteArr.push(newPaletteCell);
+    newPaletteCell.click(function() {
+       color = parseRGBtoHex(newPaletteCell.css("background-color")); 
+       $("#color-text").val(color.split("#")[1].toUpperCase());
+       $("#color-text").css({"background-color": color});
+    });
+}
+
+// could possibly separate into more than one function for readability
 function parseRGBtoHex(o) {
     var rawRGB = o.split("(")[1].split(")")[0];
     rawRGB = rawRGB.split(",");
