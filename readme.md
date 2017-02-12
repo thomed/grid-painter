@@ -14,7 +14,6 @@ Also allows exporting to a PNG:
 * Allow user to pick grid dimensions
 * Make various improvements to UI
 * Color picker/dropper tool
-* Recently used colors palette
 * Possibly add ruler or other kind of spacial reference
 
 ####Stretch goals:
