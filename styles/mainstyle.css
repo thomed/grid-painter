@@ -47,6 +47,14 @@ body {
     z-index: 0;
 }
 
+#user-options button {
+    color: white;
+}
+
+#user-options button:hover {
+    color: #c5c5c5;
+}
+
 #user-options  table {
     width: 100%;
     border: solid 1px black;
