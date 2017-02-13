@@ -15,7 +15,7 @@
 // ingredients
 var numColumns = 32, numRows = 32;
 var col = 1, row = 1;
-var mouseDown = false;
+var mouseDown = false, eyeDropper = false;
 var color = "#00f";
 var gridArr, paletteArr;
 
@@ -84,7 +84,14 @@ function initGrid() {
             }
         });
         $(this).mousedown(function () {
-            $(this).css({'background-color': color});
+            if(!eyeDropper) {
+                $(this).css({'background-color': color});
+            } else {
+                color = parseRGBtoHex($(this).css("background-color"));
+                $("#color-text").val(color.split("#")[1].toUpperCase());
+                $("#color-text").css({"background-color": color});
+                eyeDropper = false;
+            }
         });
     });
 }
@@ -122,9 +129,7 @@ function parseRGBtoHex(o) {
         c = parseInt(c).toString(16);
         return (c.length === 1) ? "0" + c : c;
     });
-    
-    //console.log("#" + hex.join(""));
-    
+        
     return("#" + hex.join(""));
 }
 
@@ -190,7 +195,7 @@ function downloadPNG(uri) {
 function setErase() {
     color = "transparent";
     $("#color-text").val("erase");
-    $("#color-text").css({"background-color": "transparent", "color": "black"});
+    $("#color-text").css({"background-color": "white", "color": "black"});
 }
 
 function clearCanvas() {

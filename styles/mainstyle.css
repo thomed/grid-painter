@@ -1,5 +1,6 @@
 body {
     background-color: #cecece;
+    cursor: glyphicon-pushpin;
 }
 
 .drawing-area { 
@@ -72,6 +73,18 @@ body {
 
 #user-options .btn {
     width: 80%;
+}
+
+#tools {
+    width: auto !important;
+}
+
+#tools td{
+    padding: 0;
+}
+
+#tools {
+    border: none !important;
 }
 
 .table-header {
