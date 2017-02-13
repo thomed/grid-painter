@@ -1,6 +1,6 @@
 body {
     background-color: #cecece;
-    cursor: glyphicon-pushpin;
+    cursor: default;
 }
 
 .drawing-area { 
@@ -10,7 +10,6 @@ body {
 #grid-area {
     margin-top: 7em;
     pointer-events: fill;
-    cursor: default;
     white-space: nowrap;
     display: inline-block;
     background-color: white;

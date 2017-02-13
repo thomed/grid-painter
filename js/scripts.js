@@ -2,7 +2,6 @@
  * TODO:
  * - Grid dimensions option
  * - Various UI improvements
- * - Color picker tool (dropper)
  * - Possibly add ruler or other kind of spacial reference
  * - Make transparent cells perceptible
  * 
@@ -87,9 +86,12 @@ function initGrid() {
             if(!eyeDropper) {
                 $(this).css({'background-color': color});
             } else {
-                color = parseRGBtoHex($(this).css("background-color"));
-                $("#color-text").val(color.split("#")[1].toUpperCase());
-                $("#color-text").css({"background-color": color});
+                if($(this).css("background-color") !== "transparent") {
+                    color = parseRGBtoHex($(this).css("background-color"));
+                    $("#color-text").val(color.split("#")[1].toUpperCase());
+                    $("#color-text").css({"background-color": color});
+                }
+                $("body").css({"cursor": "default"});
                 eyeDropper = false;
             }
         });
@@ -97,6 +99,7 @@ function initGrid() {
 }
 
 function initPalette() {
+    $("#palette").empty();
     paletteArr = [];
     addPaletteColor("black");
     addPaletteColor("grey");
@@ -119,6 +122,11 @@ function addPaletteColor(c) {
        $("#color-text").val(color.split("#")[1].toUpperCase());
        $("#color-text").css({"background-color": color});
     });
+}
+
+function eyeDropping() {
+    eyeDropper = true;
+    $("body").css({"cursor" : "copy"});
 }
 
 // could possibly separate into more than one function for readability
@@ -200,6 +208,7 @@ function setErase() {
 
 function clearCanvas() {
     $(".wee-div").css({'background-color': 'transparent'});
+    initPalette();
 }
 
 $("#download-btn").click(function () {
