@@ -5,10 +5,10 @@ body {
 
 .drawing-area { 
     text-align: center;
+    margin-top: 7em;
 }
 
 #grid-area {
-    margin-top: 7em;
     pointer-events: fill;
     white-space: nowrap;
     display: inline-block;
@@ -25,7 +25,7 @@ body {
 }
 
 .wee-div:hover {
-    background-color: black;
+    background-color: black !important;
 }
 
 .grid-row {
@@ -111,4 +111,8 @@ body {
 .last-table {
     border-bottom: none !important;
     text-align: center;
+}
+
+.container-fluid {
+    padding: 0;
 }

@@ -12,9 +12,9 @@ Also allows exporting to a PNG:
 ####Current todo list:
 
 * Allow user to pick grid dimensions
-* Make various improvements to UI
-* Possibly add ruler or other kind of spacial reference
+* Make various improvements to UI (e.g. prevent grid from hiding behind sidebar)
 * Make transparent cells perceptible
+* Fix conflict with eraser and eyedropper
 
 ####Stretch goals:
 

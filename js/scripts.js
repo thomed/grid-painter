@@ -1,9 +1,9 @@
 /**
  * TODO:
  * - Grid dimensions option
- * - Various UI improvements
- * - Possibly add ruler or other kind of spacial reference
+ * - Various UI improvements (e.g. prevent grid from hiding behind sidebar)
  * - Make transparent cells perceptible
+ * - Fix conflict with eraser and eyedropper
  * 
  * Stretch goals:
  * - Additional drawing tools
@@ -124,12 +124,9 @@ function addPaletteColor(c) {
     });
 }
 
-function eyeDropping() {
-    eyeDropper = true;
-    $("body").css({"cursor" : "copy"});
-}
-
-// could possibly separate into more than one function for readability
+/**
+ * Takes color in raw rgb format and returns hex with leading #
+ */
 function parseRGBtoHex(o) {
     var rawRGB = o.split("(")[1].split(")")[0];
     rawRGB = rawRGB.split(",");
@@ -204,6 +201,11 @@ function setErase() {
     color = "transparent";
     $("#color-text").val("erase");
     $("#color-text").css({"background-color": "white", "color": "black"});
+}
+
+function eyeDropping() {
+    eyeDropper = true;
+    $("body").css({"cursor" : "copy"});
 }
 
 function clearCanvas() {
