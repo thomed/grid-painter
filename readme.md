@@ -11,7 +11,7 @@ Also allows exporting to a PNG:
 <br />
 ####Current todo list:
 
-* Allow user to pick grid dimensions
+* Allow user to pick grid dimensions (WIP)
 * Make various improvements to UI (e.g. prevent grid from hiding behind sidebar)
 * Make transparent cells perceptible
 * Fix conflict with eraser and eyedropper

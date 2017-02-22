@@ -1,6 +1,6 @@
 /**
  * TODO:
- * - Grid dimensions option
+ * - Grid dimensions option (WIP)
  * - Various UI improvements (e.g. prevent grid from hiding behind sidebar)
  * - Make transparent cells perceptible
  * - Fix conflict with eraser and eyedropper
@@ -68,34 +68,13 @@ function initGrid() {
 
         $("#grid-area").append(rowDiv);
         for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
-            gridArr[gridRow][gridColumn] = getLastChild().append(weeDiv).children().last();
-            getLastGrandchild().addClass(divRowClass + " " + divColClass);
+
+            addCell(getLastChild());
             col++;
         }
         col = 0;
         row++;
     }
-
-    $(".grid-row").children().each(function () {
-        $(this).mouseover(function () {
-            if (mouseDown) {
-                $(this).css({'background-color': color});
-            }
-        });
-        $(this).mousedown(function () {
-            if(!eyeDropper) {
-                $(this).css({'background-color': color});
-            } else {
-                if($(this).css("background-color") !== "transparent") {
-                    color = parseRGBtoHex($(this).css("background-color"));
-                    $("#color-text").val(color.split("#")[1].toUpperCase());
-                    $("#color-text").css({"background-color": color});
-                }
-                $("body").css({"cursor": "default"});
-                eyeDropper = false;
-            }
-        });
-    });
 }
 
 function initPalette() {
@@ -111,16 +90,16 @@ function initPalette() {
 }
 
 function addPaletteColor(c) {
-    if(paletteArr.length % 7 === 0 || paletteArr.length === 0) {
+    if (paletteArr.length % 7 === 0 || paletteArr.length === 0) {
         $("#palette").append("<tr></tr>");
     }
     var newPaletteCell = $("#palette").children().last().append("<td></td>").children().last();
     newPaletteCell.css({"background-color": c});
     paletteArr.push(newPaletteCell);
-    newPaletteCell.click(function() {
-       color = parseRGBtoHex(newPaletteCell.css("background-color")); 
-       $("#color-text").val(color.split("#")[1].toUpperCase());
-       $("#color-text").css({"background-color": color});
+    newPaletteCell.click(function () {
+        color = parseRGBtoHex(newPaletteCell.css("background-color"));
+        $("#color-text").val(color.split("#")[1].toUpperCase());
+        $("#color-text").css({"background-color": color});
     });
 }
 
@@ -130,11 +109,11 @@ function addPaletteColor(c) {
 function parseRGBtoHex(o) {
     var rawRGB = o.split("(")[1].split(")")[0];
     rawRGB = rawRGB.split(",");
-    var hex = rawRGB.map(function(c) {
+    var hex = rawRGB.map(function (c) {
         c = parseInt(c).toString(16);
         return (c.length === 1) ? "0" + c : c;
     });
-        
+
     return("#" + hex.join(""));
 }
 
@@ -205,7 +184,7 @@ function setErase() {
 
 function eyeDropping() {
     eyeDropper = true;
-    $("body").css({"cursor" : "copy"});
+    $("body").css({"cursor": "copy"});
 }
 
 function clearCanvas() {
@@ -225,4 +204,62 @@ function getLastChild() {
 /** Helper Method for readability */
 function getLastGrandchild() {
     return $("#grid-area").children().last().children().last();
+}
+
+/**
+ * Adds a grid cell as a child to the given parent element.
+ * @param Parent element to add grid cell to.
+ */
+function addCell(parent) {
+    var newCell = parent.append(weeDiv).children().last();
+    newCell.mouseover(function () {
+        if (mouseDown) {
+            $(this).css({'background-color': color});
+        }
+    });
+    newCell.mousedown(function () {
+        if (!eyeDropper) {
+            $(this).css({'background-color': color});
+        } else {
+            if ($(this).css("background-color") !== "transparent") {
+                color = parseRGBtoHex($(this).css("background-color"));
+                $("#color-text").val(color.split("#")[1].toUpperCase());
+                $("#color-text").css({"background-color": color});
+            }
+        }
+    });
+}
+
+function addColumn() {
+    console.log("cant add columns yet");
+    console.log(numColumns); // debug
+    $("#grid-area").children().each(function() {
+        addCell($(this));
+    });
+    
+    numColumns++;
+}
+
+function addRow() {
+    console.log(numRows); // debug
+    $("#grid-area").append(rowDiv);
+    for(var i = 0 ; i < numColumns; i++) {
+        addCell(getLastChild());
+    }
+    
+    numRows++;
+}
+
+function removeColumn() {
+    console.log("can't remove columns yet");
+    $("#grid-area").children().each(function () {
+        $(this).children().last().remove();
+    });
+    
+    numColumns--;
+}
+
+function removeRow() {
+    getLastChild().remove();
+    numRows--;
 }

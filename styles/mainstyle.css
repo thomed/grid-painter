@@ -74,16 +74,13 @@ body {
     width: 80%;
 }
 
-#tools {
+#tools.subtable {
     width: auto !important;
-}
-
-#tools td{
-    padding: 0;
-}
-
-#tools {
     border: none !important;
+}
+
+#tools.subtable td {
+    padding: 0;
 }
 
 .table-header {

@@ -23,7 +23,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <table id="tools">
+                            <table id="tools" class="subtable">
                                 <tr>
                                     <td>
                                         <button class="btn-link" onclick="setErase()" title="Eraser"><span class="glyphicon glyphicon-erase"></span></button>
@@ -38,8 +38,28 @@
                 </table>
                 <table>
                     <tr><td class="table-header">Grid Options</td></tr>
-                    <tr><td><label><input id="grid-checkbox" type="checkbox" checked />Grid</label></td></tr>
-                    <tr><td><div id="scale-slider"></div>Cell Scale</td></tr>
+                    <tr><td><label><input id="grid-checkbox" type="checkbox" checked /> Enable Grid</label></td></tr>
+                    <tr>
+                        <td>
+                            <table id="tools" class="subtable">
+                                <tr><td>Rows</td></tr>
+                                <tr>
+                                    <td>
+                                        <button class="btn-link" onclick="removeRow()"><span class="glyphicon glyphicon-minus"></span></button>
+                                        <button class="btn-link" onclick="addRow()"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </td>
+                                </tr>
+                                <tr><td>Columns</td></tr>
+                                <tr>
+                                    <td>
+                                        <button class="btn-link" onclick="removeColumn()"><span class="glyphicon glyphicon-minus"></span></button>
+                                        <button class="btn-link" onclick="addColumn()"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td>Cell Scale<div id="scale-slider"></div></td></tr>
                 </table>
                 <table class="last-table">
                     <tr><td><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
