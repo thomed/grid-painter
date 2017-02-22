@@ -226,13 +226,13 @@ function addCell(parent) {
                 $("#color-text").val(color.split("#")[1].toUpperCase());
                 $("#color-text").css({"background-color": color});
             }
+            eyeDropper = false;
+            $("body").css({"cursor": "default"});
         }
     });
 }
 
 function addColumn() {
-    console.log("cant add columns yet");
-    console.log(numColumns); // debug
     $("#grid-area").children().each(function() {
         addCell($(this));
     });
@@ -241,7 +241,6 @@ function addColumn() {
 }
 
 function addRow() {
-    console.log(numRows); // debug
     $("#grid-area").append(rowDiv);
     for(var i = 0 ; i < numColumns; i++) {
         addCell(getLastChild());
@@ -251,7 +250,6 @@ function addRow() {
 }
 
 function removeColumn() {
-    console.log("can't remove columns yet");
     $("#grid-area").children().each(function () {
         $(this).children().last().remove();
     });

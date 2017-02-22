@@ -25,7 +25,7 @@ body {
 }
 
 .wee-div:hover {
-    background-color: black !important;
+    background-color: black;
 }
 
 .grid-row {
