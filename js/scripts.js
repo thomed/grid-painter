@@ -2,6 +2,9 @@
  * TODO:
  * - Grid dimensions option (WIP - Downloading bugged)
  * - Various UI improvements (e.g. prevent grid from hiding behind sidebar)
+ *      -- Prevent grid from hiding behind sidebar
+ *      -- Make added cells match current cell scale (fixes upon resize)
+ *      -- Style for mouseover feedback (grid color or background color?)
  * - Make transparent cells perceptible
  * - Fix conflict with eraser and eyedropper
  * 
@@ -123,6 +126,9 @@ function parseRGBtoHex(o) {
  */
 function parseColors() {
     var gridCell, rawRGB;
+    numRows = $("#grid-area").children().length;
+    numColumns = $("#grid-area").children().first().children().length;
+    console.log(numRows + " " + numColumns);
 
     for (gridRow = 0; gridRow < numRows; gridRow++) {
         for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
@@ -142,6 +148,7 @@ function parseColors() {
  * download link
  */
 function generateCanvas() {
+    parseColors();
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     var imgData = ctx.createImageData(numColumns, numRows);
@@ -150,7 +157,6 @@ function generateCanvas() {
     canvas.height = numRows;
     document.body.appendChild(canvas);
 
-    parseColors();
     for (gridRow = 0; gridRow < numRows; gridRow++) {
         for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
             var gridCell = gridArr[gridRow][gridColumn];
@@ -207,7 +213,8 @@ function getLastGrandchild() {
 }
 
 /**
- * Adds a grid cell as a child to the given parent element.
+ * Adds a grid cell as a child to the given parent element, should generally be 
+ * a .grid-row.
  * @param Parent element to add grid cell to.
  * @return Returns the jquery object represent the newly created cell.
  */
@@ -235,35 +242,31 @@ function addCell(parent) {
 }
 
 function addColumn() {
-    // TODO increment gridArr row lengths and add cell to gridArr rows
-    $("#grid-area").children().each(function() {
-        addCell($(this));
-    });
-        
-    numColumns++;
+    for (var i = 0; i < $("#grid-area").children().length; i++) {
+        var currentGridRow = $("#grid-area").children()[i];
+        gridArr[i].length++;
+        gridArr[i][gridArr[i].length - 1] = addCell($(currentGridRow));
+    }
 }
 
 function addRow() {
-    $("#grid-area").append(rowDiv);
-    gridArr.length++;
-    gridArr[gridArr.length - 1] = new Array(numColumns);
-    for(var i = 0 ; i < numColumns; i++) {
+    $("#grid-area").append(rowDiv);    
+    gridArr[gridArr.length++] = new Array(numColumns);
+    for (var i = 0; i < $("#grid-area").children().first().children().length; i++) {
         gridArr[gridArr.length - 1][i] = addCell(getLastChild());
     }
-    numRows++;
 }
 
 function removeColumn() {
     // TODO decrement gridArr row lengths
-    $("#grid-area").children().each(function () {
-        $(this).children().last().remove();
-    });
-
-    numColumns--;
+    for (var i = 0; i < $("#grid-area").children().length; i++) {
+        var currentGridRow = $("#grid-area").children()[i];
+        $(currentGridRow).children().last().remove();
+        gridArr[i].length--;
+    }
 }
 
 function removeRow() {
-    // TODO decrement gridArr length
     getLastChild().remove();
-    numRows--;
+    gridArr.length--;
 }

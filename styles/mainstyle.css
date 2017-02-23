@@ -105,6 +105,11 @@ body {
     max-width: 150px;
 }
 
+.littler-glyph {
+    font-size: 12px;
+    margin-bottom: 0.5em;
+}
+
 .last-table {
     border-bottom: none !important;
     text-align: center;
