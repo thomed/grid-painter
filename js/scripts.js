@@ -1,6 +1,6 @@
 /**
  * TODO:
- * - Grid dimensions option (WIP)
+ * - Grid dimensions option (WIP - Downloading bugged)
  * - Various UI improvements (e.g. prevent grid from hiding behind sidebar)
  * - Make transparent cells perceptible
  * - Fix conflict with eraser and eyedropper
@@ -69,7 +69,7 @@ function initGrid() {
         $("#grid-area").append(rowDiv);
         for (gridColumn = 0; gridColumn < numColumns; gridColumn++) {
 
-            addCell(getLastChild());
+            gridArr[gridRow][gridColumn] = addCell(getLastChild());
             col++;
         }
         col = 0;
@@ -209,6 +209,7 @@ function getLastGrandchild() {
 /**
  * Adds a grid cell as a child to the given parent element.
  * @param Parent element to add grid cell to.
+ * @return Returns the jquery object represent the newly created cell.
  */
 function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
@@ -230,34 +231,39 @@ function addCell(parent) {
             $("body").css({"cursor": "default"});
         }
     });
+    return newCell;
 }
 
 function addColumn() {
+    // TODO increment gridArr row lengths and add cell to gridArr rows
     $("#grid-area").children().each(function() {
         addCell($(this));
     });
-    
+        
     numColumns++;
 }
 
 function addRow() {
     $("#grid-area").append(rowDiv);
+    gridArr.length++;
+    gridArr[gridArr.length - 1] = new Array(numColumns);
     for(var i = 0 ; i < numColumns; i++) {
-        addCell(getLastChild());
+        gridArr[gridArr.length - 1][i] = addCell(getLastChild());
     }
-    
     numRows++;
 }
 
 function removeColumn() {
+    // TODO decrement gridArr row lengths
     $("#grid-area").children().each(function () {
         $(this).children().last().remove();
     });
-    
+
     numColumns--;
 }
 
 function removeRow() {
+    // TODO decrement gridArr length
     getLastChild().remove();
     numRows--;
 }
