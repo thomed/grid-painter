@@ -1,10 +1,8 @@
 /**
  * TODO:
- * - Grid dimensions option (WIP - Downloading bugged)
- * - Various UI improvements (e.g. prevent grid from hiding behind sidebar)
+ * - Grid dimensions option improvements
+ * - Various UI improvements
  *      -- Prevent grid from hiding behind sidebar
- *      -- Make added cells match current cell scale (fixes upon resize)
- *      -- Style for mouseover feedback (grid color or background color?)
  * - Make transparent cells perceptible
  * - Fix conflict with eraser and eyedropper
  * 
@@ -15,11 +13,12 @@
  */
 
 // ingredients
-var numColumns = 32, numRows = 32;
+var numColumns = 24, numRows = 24;
 var col = 1, row = 1;
 var mouseDown = false, eyeDropper = false;
 var color = "#00f";
 var gridArr, paletteArr;
+var cellSize = 15;
 
 // html div strings
 var weeDiv = "<div class='wee-div'></div>";
@@ -52,8 +51,9 @@ $(function () {
         min: 8,
         max: 40,
         slide: function (event, ui) {
-            $(".wee-div").css({"height": ui.value + "px", "width": ui.value + "px"});
-            $(".grid-row").css({"height": ui.value + "px"});
+            cellSize = ui.value;
+            $(".wee-div").css({"height": cellSize + "px", "width": cellSize + "px"});
+            $(".grid-row").css({"height": cellSize + "px"});
         }
     });
 
@@ -220,10 +220,16 @@ function getLastGrandchild() {
  */
 function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
+    $(newCell).css({"width": cellSize + "px", "height": cellSize + "px"});
+    $(".grid-row").css({"height": cellSize + "px"});
     newCell.mouseover(function () {
+        $(this).css({"border": "solid 2px black"});
         if (mouseDown) {
             $(this).css({'background-color': color});
         }
+    });
+    newCell.mouseleave(function() {
+       $(this).css({"border": "solid 1px black"}); 
     });
     newCell.mousedown(function () {
         if (!eyeDropper) {
