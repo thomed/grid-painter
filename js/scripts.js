@@ -1,6 +1,5 @@
 /**
  * TODO:
- * - Grid dimensions option improvements
  * - Various UI improvements
  *      -- Prevent grid from hiding behind sidebar
  * - Make transparent cells perceptible
@@ -65,7 +64,6 @@ $(function () {
 
 function initGrid() {
     gridArr = new Array(numColumns);
-
     for (gridRow = 0; gridRow < numRows; gridRow++) {
         gridArr[gridRow] = new Array(numRows);
 
@@ -78,6 +76,7 @@ function initGrid() {
         col = 0;
         row++;
     }
+    $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
 }
 
 function initPalette() {
@@ -244,6 +243,7 @@ function addCell(parent) {
             $("body").css({"cursor": "default"});
         }
     });
+    $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
     return newCell;
 }
 
@@ -264,15 +264,16 @@ function addRow() {
 }
 
 function removeColumn() {
-    // TODO decrement gridArr row lengths
     for (var i = 0; i < $("#grid-area").children().length; i++) {
         var currentGridRow = $("#grid-area").children()[i];
         $(currentGridRow).children().last().remove();
         gridArr[i].length--;
     }
+    $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
 }
 
 function removeRow() {
     getLastChild().remove();
     gridArr.length--;
+    $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
 }

@@ -11,7 +11,6 @@ Also allows exporting to a PNG:
 <br />
 ####Current todo list:
 
-* Grid dimensions option improvements
 * Make various improvements to UI 
     * Prevent grid from hiding behind sidebar
 * Make transparent cells perceptible
