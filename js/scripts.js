@@ -16,7 +16,7 @@ var numColumns = 24, numRows = 24;
 var col = 1, row = 1;
 var mouseDown = false, eyeDropper = false;
 var color = "#00f";
-var gridArr, paletteArr;
+var gridArr;
 var cellSize = 15;
 
 // html div strings
@@ -81,7 +81,7 @@ function initGrid() {
 
 function initPalette() {
     $("#palette").empty();
-    paletteArr = [];
+    $("#palette").append("<tr></tr>");
     addPaletteColor("black");
     addPaletteColor("grey");
     addPaletteColor("white");
@@ -92,16 +92,18 @@ function initPalette() {
 }
 
 function addPaletteColor(c) {
-    if (paletteArr.length % 7 === 0 || paletteArr.length === 0) {
-        $("#palette").append("<tr></tr>");
-    }
     var newPaletteCell = $("#palette").children().last().append("<td></td>").children().last();
+    newPaletteCell.attr({"title": c + " - Click scroll wheel to remove"});
     newPaletteCell.css({"background-color": c});
-    paletteArr.push(newPaletteCell);
-    newPaletteCell.click(function () {
-        color = parseRGBtoHex(newPaletteCell.css("background-color"));
-        $("#color-text").val(color.split("#")[1].toUpperCase());
-        $("#color-text").css({"background-color": color});
+    newPaletteCell.on("click auxclick", function (e) {
+        if (e.which === 2) {
+            e.preventDefault();
+            newPaletteCell.remove();
+        } else {
+            color = parseRGBtoHex(newPaletteCell.css("background-color"));
+            $("#color-text").val(color.split("#")[1].toUpperCase());
+            $("#color-text").css({"background-color": color});
+        }
     });
 }
 
@@ -227,8 +229,8 @@ function addCell(parent) {
             $(this).css({'background-color': color});
         }
     });
-    newCell.mouseleave(function() {
-       $(this).css({"border": "solid 1px black"}); 
+    newCell.mouseleave(function () {
+        $(this).css({"border": "solid 1px black"});
     });
     newCell.mousedown(function () {
         if (!eyeDropper) {
@@ -256,7 +258,7 @@ function addColumn() {
 }
 
 function addRow() {
-    $("#grid-area").append(rowDiv);    
+    $("#grid-area").append(rowDiv);
     gridArr[gridArr.length++] = new Array(numColumns);
     for (var i = 0; i < $("#grid-area").children().first().children().length; i++) {
         gridArr[gridArr.length - 1][i] = addCell(getLastChild());
