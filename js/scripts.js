@@ -223,6 +223,9 @@ function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
     $(newCell).css({"width": cellSize + "px", "height": cellSize + "px"});
     $(".grid-row").css({"height": cellSize + "px"});
+    if(!$("#grid-checkbox").is(":checked")) {
+        $(newCell).css({"border": "solid 1px transparent"});
+    }
     newCell.mouseover(function () {
         $(this).css({"border": "solid 2px black"});
         if (mouseDown) {
@@ -230,7 +233,11 @@ function addCell(parent) {
         }
     });
     newCell.mouseleave(function () {
-        $(this).css({"border": "solid 1px black"});
+        if($("#grid-checkbox").is(":checked")) {
+            $(this).css({"border": "solid 1px black"});
+        } else {
+            $(this).css({"border": "solid 1px transparent"});
+        }
     });
     newCell.mousedown(function () {
         if (!eyeDropper) {
