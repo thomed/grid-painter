@@ -213,6 +213,23 @@ function getLastGrandchild() {
 }
 
 /**
+ * Floodfill wip
+ * https://en.wikipedia.org/wiki/Flood_fill
+ */
+function floodFill(cell, targetColor, replacementColor) {
+    if (replacementColor === $(cell).css("background-color") ||
+            $(cell).css("background-color") !== targetColor) {
+        return;
+    }
+
+    $(cell).css({"background-color": replacementColor});
+    // floodFill south
+    // floodFill north
+    // floodFill west
+    // floodFill east
+}
+
+/**
  * Adds a grid cell as a child to the given parent element, should generally be 
  * a .grid-row.
  * @param Parent element to add grid cell to.
@@ -220,9 +237,18 @@ function getLastGrandchild() {
  */
 function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
+
+//    console.log($(parent).prev().next);
+//    //initialize cell relations
+//    newCell.west = newCell.prev();
+//    newCell.west.east = newCell;
+//    var depth = $(parent).children().length();
+//    newCell.south = newCell.parent().next().children()[depth - 1];
+
+
     $(newCell).css({"width": cellSize + "px", "height": cellSize + "px"});
     $(".grid-row").css({"height": cellSize + "px"});
-    if(!$("#grid-checkbox").is(":checked")) {
+    if (!$("#grid-checkbox").is(":checked")) {
         $(newCell).css({"border": "solid 1px transparent"});
     }
     newCell.mouseover(function () {
@@ -232,7 +258,7 @@ function addCell(parent) {
         }
     });
     newCell.mouseleave(function () {
-        if($("#grid-checkbox").is(":checked")) {
+        if ($("#grid-checkbox").is(":checked")) {
             $(this).css({"border": "solid 1px black"});
         } else {
             $(this).css({"border": "solid 1px transparent"});
