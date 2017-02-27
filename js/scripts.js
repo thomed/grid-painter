@@ -2,7 +2,6 @@
  * TODO:
  * - Various UI improvements
  *      -- Prevent grid from hiding behind sidebar
- * - Make transparent cells perceptible
  * - Fix conflict with eraser and eyedropper
  * 
  * Stretch goals:

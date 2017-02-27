@@ -13,7 +13,6 @@ Also allows exporting to a PNG:
 
 * Make various improvements to UI 
     * Prevent grid from hiding behind sidebar
-* Make transparent cells perceptible
 * Fix conflict with eraser and eyedropper
 
 ####Stretch goals:
