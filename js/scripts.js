@@ -76,6 +76,9 @@ function initGrid() {
         row++;
     }
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
+    
+    // debugging
+    //console.log($(".wee-div"));
 }
 
 function initPalette() {
@@ -213,20 +216,22 @@ function getLastGrandchild() {
 }
 
 /**
- * Floodfill wip
+ * Floodfill
  * https://en.wikipedia.org/wiki/Flood_fill
  */
 function floodFill(cell, targetColor, replacementColor) {
-    if (replacementColor === $(cell).css("background-color") ||
-            $(cell).css("background-color") !== targetColor) {
+    //console.log(cell);
+    if (replacementColor === parseRGBtoHex(cell.css("background-color")) ||
+            parseRGBtoHex(cell.css("background-color")) !== targetColor) {
         return;
     }
 
     $(cell).css({"background-color": replacementColor});
-    // floodFill south
-    // floodFill north
-    // floodFill west
-    // floodFill east
+    
+    floodFill(cell.left, targetColor, replacementColor);
+    floodFill(cell.down, targetColor, replacementColor);
+    floodFill(cell.up, targetColor, replacementColor);
+    floodFill(cell.right, targetColor, replacementColor);
 }
 
 /**
@@ -237,15 +242,29 @@ function floodFill(cell, targetColor, replacementColor) {
  */
 function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
-
-//    console.log($(parent).prev().next);
-//    //initialize cell relations
-//    newCell.west = newCell.prev();
-//    newCell.west.east = newCell;
-//    var depth = $(parent).children().length();
-//    newCell.south = newCell.parent().next().children()[depth - 1];
-
-
+    
+    /**
+     * floodFill should work once cell relations are sorted out.
+     * currently isn't setting all the relations correctly.
+     * 
+     * once fixed, remember to set drawing back to normal and switch flood fill
+     * to be enabled when selected from drawing options.
+     */
+    
+    //console.log(parent.prev());
+    var columnDepth = parent.children().length;
+    // relate above and below
+    if(parent.prev().length !== 0) {
+        newCell.up = parent.prev().children()[columnDepth - 1];
+        newCell.up.down = newCell;
+    }
+    //relate sides
+    if(parent.children().length !== 1){
+        newCell.left = newCell.prev();
+        newCell.left.right = newCell;
+    }
+    // end relations (remove comment when complete)
+    
     $(newCell).css({"width": cellSize + "px", "height": cellSize + "px"});
     $(".grid-row").css({"height": cellSize + "px"});
     if (!$("#grid-checkbox").is(":checked")) {
@@ -266,7 +285,10 @@ function addCell(parent) {
     });
     newCell.mousedown(function () {
         if (!eyeDropper) {
-            $(this).css({'background-color': color});
+            
+            // set back to normal when ready
+            floodFill(newCell, "#00000000", "#0000ff");
+            //$(this).css({'background-color': color});
         } else {
             if ($(this).css("background-color") !== "transparent") {
                 color = parseRGBtoHex($(this).css("background-color"));
