@@ -13,7 +13,7 @@
 // ingredients
 var numColumns = 24, numRows = 24;
 var col = 1, row = 1;
-var mouseDown = false, eyeDropper = false;
+var mouseDown = false, eyeDropper = false, floodFilling = false;
 var color = "#00f";
 var gridArr;
 var cellSize = 15;
@@ -76,6 +76,7 @@ function initGrid() {
         row++;
     }
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
+    relateCells();
 }
 
 function initPalette() {
@@ -184,13 +185,30 @@ function downloadPNG(uri) {
 
 function setErase() {
     color = "transparent";
-    $("#color-text").val("erase");
+    $("#color-text").val("transparent");
     $("#color-text").css({"background-color": "white", "color": "black"});
 }
 
 function eyeDropping() {
-    eyeDropper = true;
-    $("body").css({"cursor": "copy"});
+    if (eyeDropper) {
+        eyeDropper = false;
+        $("body").css({"cursor": "default"});
+        $("#eyedropper").css({"color": "white"});
+    } else {
+        eyeDropper = true;
+        $("body").css({"cursor": "copy"});
+        $("#eyedropper").css({"color": "#2effa"});
+    }
+}
+
+function setFloodFill() {
+    if (floodFilling) {
+        floodFilling = false;
+        $("#floodfill").css({"color": "white"});
+    } else {
+        floodFilling = true;
+        $("#floodfill").css({"color": "#2effa"});
+    }
 }
 
 function clearCanvas() {
@@ -213,16 +231,42 @@ function getLastGrandchild() {
 }
 
 /**
+ * Floodfill / Paintbucket operation
+ */
+function floodFill(cell, targetColor, replacementColor) {
+    if (replacementColor === parseRGBtoHex($(cell).css("background-color")) ||
+            parseRGBtoHex($(cell).css("background-color")) !== targetColor) {
+        return;
+    }
+
+    $(cell).css({"background-color": replacementColor});
+
+    if (typeof $(cell).data("left") !== "undefined") {
+        floodFill($(cell).data("left"), targetColor, replacementColor);
+    }
+    if (typeof $(cell).data("down") !== "undefined") {
+        floodFill($(cell).data("down"), targetColor, replacementColor);
+    }
+    if (typeof $(cell).data("up") !== "undefined") {
+        floodFill($(cell).data("up"), targetColor, replacementColor);
+    }
+    if (typeof $(cell).data("right") !== "undefined") {
+        floodFill($(cell).data("right"), targetColor, replacementColor);
+    }
+}
+
+/**
  * Adds a grid cell as a child to the given parent element, should generally be 
  * a .grid-row.
- * @param Parent element to add grid cell to.
+ * @param parent Parent element to add grid cell to.
  * @return Returns the jquery object represent the newly created cell.
  */
 function addCell(parent) {
     var newCell = parent.append(weeDiv).children().last();
+
     $(newCell).css({"width": cellSize + "px", "height": cellSize + "px"});
     $(".grid-row").css({"height": cellSize + "px"});
-    if(!$("#grid-checkbox").is(":checked")) {
+    if (!$("#grid-checkbox").is(":checked")) {
         $(newCell).css({"border": "solid 1px transparent"});
     }
     newCell.mouseover(function () {
@@ -232,27 +276,59 @@ function addCell(parent) {
         }
     });
     newCell.mouseleave(function () {
-        if($("#grid-checkbox").is(":checked")) {
+        if ($("#grid-checkbox").is(":checked")) {
             $(this).css({"border": "solid 1px black"});
         } else {
             $(this).css({"border": "solid 1px transparent"});
         }
     });
     newCell.mousedown(function () {
-        if (!eyeDropper) {
+        if (!eyeDropper && !floodFilling) {
             $(this).css({'background-color': color});
         } else {
-            if ($(this).css("background-color") !== "transparent") {
-                color = parseRGBtoHex($(this).css("background-color"));
-                $("#color-text").val(color.split("#")[1].toUpperCase());
-                $("#color-text").css({"background-color": color});
+            if (floodFilling) {
+                var replacementColor = $("#color-text").val() === "transparent" ? "transparent" : "#" + $("#color-text").val();
+                floodFill(newCell, parseRGBtoHex(newCell.css("background-color")), replacementColor);
+                return;
             }
-            eyeDropper = false;
-            $("body").css({"cursor": "default"});
+            if (floodFilling) {
+                if ($(this).css("background-color") !== "transparent") {
+                    color = parseRGBtoHex($(this).css("background-color"));
+                    $("#color-text").val(color.split("#")[1].toUpperCase());
+                    $("#color-text").css({"background-color": color});
+                }
+                eyeDropper = false;
+                $("body").css({"cursor": "default"});
+                eyeDropping();
+            }
         }
     });
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
     return newCell;
+}
+
+/**
+ * would like to get this so it works as each cell is added to increase efficiency
+ */
+function relateCells() {
+    $("#grid-area").children().each(function () {
+        var currentRow = this;
+        $(currentRow).children().each(function () {
+            var columnDepth = $(currentRow).children().index($(this));
+            if ($(currentRow).prev().length > 0) {
+                $(this).data("up", $($(currentRow).prev().children()[columnDepth]));
+            }
+            if ($(currentRow).next().length > 0) {
+                $(this).data("down", $($(currentRow).next().children()[columnDepth]));
+            }
+            if ($(this).next().length > 0) {
+                $(this).data("right", $(this).next());
+            }
+            if ($(this).prev().length > 0) {
+                $(this).data("left", $(this).prev());
+            }
+        });
+    });
 }
 
 function addColumn() {
@@ -261,6 +337,7 @@ function addColumn() {
         gridArr[i].length++;
         gridArr[i][gridArr[i].length - 1] = addCell($(currentGridRow));
     }
+    relateCells();
 }
 
 function addRow() {
@@ -269,6 +346,7 @@ function addRow() {
     for (var i = 0; i < $("#grid-area").children().first().children().length; i++) {
         gridArr[gridArr.length - 1][i] = addCell(getLastChild());
     }
+    relateCells();
 }
 
 function removeColumn() {
@@ -278,10 +356,12 @@ function removeColumn() {
         gridArr[i].length--;
     }
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
+    relateCells();
 }
 
 function removeRow() {
     getLastChild().remove();
     gridArr.length--;
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
+    relateCells();
 }
