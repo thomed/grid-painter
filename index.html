@@ -23,16 +23,16 @@
                     </tr>
                     <tr>
                         <td>
-                            <table id="tools" class="subtable">
+                            <table id="tools" class="subtable"> <!-- sort out duplicate id -->
                                 <tr>
                                     <td>
                                         <button class="btn-link" onclick="setErase()" title="Eraser"><span class="glyphicon glyphicon-erase"></span></button>
                                     </td>
                                     <td>
-                                        <button class="btn-link" onclick="eyeDropping()" title="Eyedropper"><span class="glyphicon glyphicon-pushpin"></span></button>
+                                        <button id="eyedropper" class="btn-link" onclick="eyeDropping()" title="Eyedropper"><span class="glyphicon glyphicon-pushpin"></span></button>
                                     </td>
                                     <td>
-                                        <button class="btn-link">
+                                        <button id="floodfill" class="btn-link" onclick="setFloodFill()" title="Floodfill">
                                             <span class="glyphicon glyphicon-tint"></span>
                                         </button>
                                     </td>
