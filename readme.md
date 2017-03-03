@@ -17,6 +17,5 @@ Also allows exporting to a PNG:
 
 ####Stretch goals:
 
-* Additional drawing tools
 * Exported image scaling
 * Undo / Redo

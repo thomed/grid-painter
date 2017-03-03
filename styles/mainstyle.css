@@ -55,7 +55,7 @@ body {
 }
 
 #user-options td {
-    padding: 1em 2em;
+    padding: 1em 0em 1em 2em;
 }
 
 #user-options label {
@@ -100,7 +100,7 @@ body {
 }
 
 #scale-slider {
-    max-width: 150px;
+    max-width: 135px;
 }
 
 .littler-glyph {

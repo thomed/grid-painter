@@ -5,7 +5,6 @@
  * - Fix conflict with eraser and eyedropper
  * 
  * Stretch goals:
- * - Additional drawing tools
  * - Exported image scaling
  * - Undo / Redo
  */
@@ -40,7 +39,6 @@ $(function () {
     // change color when selected
     $("#color-text").change(function () {
         color = "#" + $("#color-text").val();
-        addPaletteColor(color);
     });
 
     // increase cell size with slider
@@ -89,6 +87,12 @@ function initPalette() {
     addPaletteColor("green");
     addPaletteColor("blue");
     addPaletteColor("yellow");
+}
+
+function addCurrentColorToPalette() {
+    if($("#color-text").val() !== "transparent") {
+        addPaletteColor("#" + $("#color-text").val());
+    }
 }
 
 function addPaletteColor(c) {
