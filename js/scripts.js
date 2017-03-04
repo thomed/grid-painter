@@ -2,11 +2,11 @@
  * TODO:
  * - Various UI improvements
  *      -- Prevent grid from hiding behind sidebar
- * - Fix conflict with eraser and eyedropper
  * 
  * Stretch goals:
  * - Exported image scaling
  * - Undo / Redo
+ * - Make code clean
  */
 
 // ingredients
@@ -295,14 +295,12 @@ function addCell(parent) {
                 floodFill(newCell, parseRGBtoHex(newCell.css("background-color")), replacementColor);
                 return;
             }
-            if (floodFilling) {
+            if (eyeDropper) {
                 if ($(this).css("background-color") !== "transparent") {
                     color = parseRGBtoHex($(this).css("background-color"));
                     $("#color-text").val(color.split("#")[1].toUpperCase());
                     $("#color-text").css({"background-color": color});
                 }
-                eyeDropper = false;
-                $("body").css({"cursor": "default"});
                 eyeDropping();
             }
         }

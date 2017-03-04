@@ -13,9 +13,9 @@ Also allows exporting to a PNG:
 
 * Make various improvements to UI 
     * Prevent grid from hiding behind sidebar
-* Fix conflict with eraser and eyedropper
 
 ####Stretch goals:
 
 * Exported image scaling
 * Undo / Redo
+* Make code clean
