@@ -68,8 +68,14 @@
                     <tr><td>Cell Scale<div id="scale-slider"></div></td></tr>
                 </table>
                 <table class="last-table">
-                    <tr><td><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
-                    <tr><td><input id="download-btn" class="btn btn-default" type="button" value="Download" /></td></tr>
+                    <tr><td colspan="2"><input id="clear-btn" class="btn btn-default" type="button" onclick="clearCanvas()" value="Clear" /></td></tr>
+                    <tr><td colspan="2"><input id="download-btn" class="btn btn-default" type="button" value="Download" /></td></tr>
+                    <tr><td id="export-scale">Scale: 1</td>
+                        <td>
+                            <button class="btn-link littler-glyph" onclick="increaseExportScale()"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button class="btn-link littler-glyph" onclick="decreaseExportScale()"><span class="glyphicon glyphicon-minus"></span></button>
+                        </td>
+                    </tr>
                 </table>
             </div>
 

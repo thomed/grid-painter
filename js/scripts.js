@@ -1,12 +1,9 @@
 /**
  * TODO:
- * - Various UI improvements
- *      -- Prevent grid from hiding behind sidebar
+ * - UI rewrite
  * 
  * Stretch goals:
- * - Exported image scaling
  * - Undo / Redo
- * - Make code clean
  */
 
 // ingredients
@@ -16,6 +13,8 @@ var mouseDown = false, eyeDropper = false, floodFilling = false;
 var color = "#00f";
 var gridArr;
 var cellSize = 15;
+var exportScale = 1;
+
 
 // html div strings
 var weeDiv = "<div class='wee-div'></div>";
@@ -90,7 +89,7 @@ function initPalette() {
 }
 
 function addCurrentColorToPalette() {
-    if($("#color-text").val() !== "transparent") {
+    if ($("#color-text").val() !== "transparent") {
         addPaletteColor("#" + $("#color-text").val());
     }
 }
@@ -154,12 +153,15 @@ function parseColors() {
  */
 function generateCanvas() {
     parseColors();
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
+    var canvas = document.createElement("canvas"), returnCanvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d"), returnCtx = returnCanvas.getContext("2d");
     var imgData = ctx.createImageData(numColumns, numRows);
     var colorData = imgData.data;
     canvas.width = numColumns;
     canvas.height = numRows;
+    returnCanvas.width = numColumns * exportScale;
+    returnCanvas.height = numColumns * exportScale;
+    document.body.appendChild(returnCanvas);
     document.body.appendChild(canvas);
 
     for (gridRow = 0; gridRow < numRows; gridRow++) {
@@ -173,8 +175,12 @@ function generateCanvas() {
         }
     }
 
+    returnCtx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+    document.body.removeChild(returnCanvas);
     document.body.removeChild(canvas);
-    return canvas.toDataURL("image/png");
+    returnCtx.drawImage(canvas, 0, 0, canvas.width * exportScale, canvas.height * exportScale);
+    return returnCanvas.toDataURL("image/png");
 }
 
 function downloadPNG(uri) {
@@ -366,4 +372,14 @@ function removeRow() {
     gridArr.length--;
     $("#dimensions").text("Dimensions: " + $(getLastChild()).children().length + "x" + $("#grid-area").children().length);
     relateCells();
+}
+
+function increaseExportScale() {
+    $("#export-scale").text("Scale: " + ++exportScale);
+}
+
+function decreaseExportScale() {
+   if(exportScale > 0) {
+       $("#export-scale").text("Scale: " + --exportScale);
+   } 
 }

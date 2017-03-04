@@ -11,11 +11,8 @@ Also allows exporting to a PNG:
 <br />
 ####Current todo list:
 
-* Make various improvements to UI 
-    * Prevent grid from hiding behind sidebar
+* UI rewrite
 
 ####Stretch goals:
 
-* Exported image scaling
 * Undo / Redo
-* Make code clean
