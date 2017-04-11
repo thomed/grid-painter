@@ -1,6 +1,4 @@
 /**
- * TODO:
- * - UI rewrite
  * 
  * Stretch goals:
  * - Undo / Redo
@@ -34,7 +32,7 @@ $(function () {
     $(document).mouseup(function () {
         mouseDown = false;
     });
-
+    
     // change color when selected
     $("#color-text").change(function () {
         color = "#" + $("#color-text").val();
@@ -51,7 +49,7 @@ $(function () {
             $(".grid-row").css({"height": cellSize + "px"});
         }
     });
-
+    
     // enable/disable grid with checkbox
     $("#grid-checkbox").change(function () {
         $("#grid-checkbox").is(":checked") ? $(".wee-div").css({"border": "solid 1px black"}) : $(".wee-div").css({"border": "none"});
@@ -375,11 +373,13 @@ function removeRow() {
 }
 
 function increaseExportScale() {
-    $("#export-scale").text("Scale: " + ++exportScale);
+    exportScale++;
+    $("#export-scale").text("Scale: " + exportScale + "x");
 }
 
 function decreaseExportScale() {
-   if(exportScale > 0) {
-       $("#export-scale").text("Scale: " + --exportScale);
+   if(exportScale > 1) {
+       exportScale--;
+       $("#export-scale").text("Scale: " + exportScale + "x");
    } 
 }

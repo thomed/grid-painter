@@ -6,9 +6,11 @@ body {
 .drawing-area { 
     text-align: center;
     margin-top: 7em;
+    margin-left: 185px;
 }
 
 #grid-area {
+    margin-right: 170px;
     pointer-events: fill;
     white-space: nowrap;
     display: inline-block;
@@ -23,10 +25,11 @@ body {
     border: solid 1px black;
     display: inline-block;
     background-color: transparent;
+    margin-right: -1px;
 }
 
 .grid-row {
-    margin: -1px -2px 0 0;
+    margin: -1px -0px;
     height: 15px;
 }
 
@@ -40,14 +43,7 @@ body {
     width: 177px;
     height: 100%;
     z-index: 0;
-}
-
-#user-options button {
-    color: white;
-}
-
-#user-options button:hover {
-    color: #c5c5c5;
+    position: absolute;
 }
 
 #user-options  table {
@@ -55,7 +51,20 @@ body {
 }
 
 #user-options td {
-    padding: 1em 0em 1em 2em;
+    padding: 1px 1em 1em 1em;
+}
+
+#user-options tr {
+    padding-bottom: 2em;
+}
+
+#user-options button {
+    color: white;
+}
+
+
+#user-options button:hover {
+    color: #c2c2c2;
 }
 
 #user-options label {
@@ -63,21 +72,14 @@ body {
 }
 
 #user-options .btn {
-    width: 80%;
-}
-
-#tools.subtable {
-    width: auto !important;
-}
-
-#tools.subtable td {
-    padding: 0;
+    width: 100%;
 }
 
 .table-header {
     background-color: #121212;
     font-weight:  bold;
-    padding: 1em 2em;
+    height: 50px;
+    margin-bottom: 1em;
 }
 
 #palette tr {
@@ -100,17 +102,12 @@ body {
 }
 
 #scale-slider {
-    max-width: 135px;
+    width: 100%;
 }
 
 .littler-glyph {
     font-size: 12px;
     margin-bottom: 0.5em;
-}
-
-.last-table {
-    border-bottom: none !important;
-    text-align: center;
 }
 
 .container-fluid {
