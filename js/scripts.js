@@ -1,8 +1,3 @@
-/**
- * 
- * Stretch goals:
- * - Undo / Redo
- */
 
 // ingredients
 var numColumns = 24, numRows = 24;

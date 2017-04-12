@@ -10,6 +10,3 @@ Also allows exporting to a PNG:
 ###### (Scaled to show detail)
 <br />
 
-#### Stretch goals:
-
-* Undo / Redo
