@@ -10,3 +10,5 @@ Also allows exporting to a PNG:
 ###### (Scaled to show detail)
 <br />
 
+[Demo](https://thomed.github.io/grid-painter/index.html)
+
